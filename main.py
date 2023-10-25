@@ -49,18 +49,22 @@ def transform_back(rho_transformed: numpy.array, lamb: numpy.cdouble, delta_time
 
 
 def generate_starting_condition(dimensions: int):
-    rho_0 = numpy.zeros((dimensions,dimensions))
-    det_sgn = 0
-    while(det_sgn <= 0):
-        for i in range(0,dimensions):
-            for j in range(0,i+1):
-                rho_0[i,j] = random.uniform(-1,1)
-                rho_0[j,i] = rho_0[i,j]
-        det = numpy.linalg.det(rho_0)
-        det_sgn = numpy.sign(det)
-    det_root = math.pow(det, 1/dimensions)
-    rho_0 = rho_0 / det_root
-    return rho_0
+    #trace nicht det
+    #rho_0 = numpy.zeros((dimensions,dimensions))
+    #trace_sgn = 0
+    #while(trace_sgn <= 0):
+    #    for i in range(0,dimensions):
+    #        for j in range(0,i+1):
+    #            rho_0[i,j] = random.uniform(-1,1)
+    #            rho_0[j,i] = rho_0[i,j]
+    #    trace = numpy.linalg.det(rho_0)
+    #    trace_sgn = numpy.sign(trace)
+    #trace_root = math.pow(trace, 1/dimensions)
+    #rho_0 = rho_0 / trace_root
+
+    rand_matrix = numpy.random.rand(dimensions,dimensions)
+    rho_0 = numpy.matmul(rand_matrix,numpy.transpose(rand_matrix))
+    return rho_0 / numpy.trace(rho_0)
 
 
 def calculate_difference(matrix_1: numpy.array, matrix_2: numpy.array):
@@ -75,7 +79,7 @@ if __name__ == '__main__':
     delta_time = 0.1
     time_steps = 10
     lamb = numpy.cdouble(mu/2 + 1j * omega)
-    rho_0 = generate_starting_condition(3)
+    rho_0 = generate_starting_condition(10)
     rho_approx_transformed = solve_num(rho_0, mu, time_steps, delta_time)
     solution_approx = transform_back(rho_approx_transformed, lamb, delta_time)
     rho_exact_transformed = solve_exact(rho_0, mu, time_steps, delta_time)
@@ -97,5 +101,3 @@ if __name__ == '__main__':
         print(solution_exact[time_step+1])
         error = calculate_difference(solution_approx[time_step+1], solution_exact[time_step+1])
         print("Der Fehler von rho in der Spurklassenorm ist " + str(error))
-
-
