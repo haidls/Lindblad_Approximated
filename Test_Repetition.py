@@ -11,7 +11,7 @@ if __name__ == '__main__':
     errors_tilde = numpy.zeros(repetitions)
     errors = numpy.zeros(repetitions)
     for k in range(0, repetitions):
-        rho_0 = main.generate_starting_condition(3)
+        rho_0 = main.generate_starting_condition(10)
         rho_approx_transformed = main.solve_num(rho_0, mu, time_steps, delta_time)
         solution_approx = main.transform_back(rho_approx_transformed, lamb, delta_time)
         rho_exact_transformed = main.solve_exact(rho_0, mu, time_steps, delta_time)
