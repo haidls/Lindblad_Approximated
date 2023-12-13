@@ -1,5 +1,17 @@
+"""
+A program that solves the master equation for a simple starting conditions and visualizes the result.
+
+Authors:    Linus Haid
+
+Version:    June 14th, 2022
+"""
+
+#import os
+
 import numpy
 import main
+
+#os.add_dll_directory("C:/Users/Admin/AppData/Local/Programs/Python/Python310/DLLs")
 import matplotlib.pyplot as pyplot
 
 dimensions = 10
@@ -19,6 +31,13 @@ solution_exact = main.transform_back(rho_exact_transformed, lamb, delta_time)
 
 
 def plot_bar(approx, exact, title: str):
+    """
+    Plots a bar chart comparing to sets of data
+    :param approx: the approximate solution of the master equation
+    :param exact: the exact solution of the master equation
+    :param title: the title of the plot
+    :return: none
+    """
     width = 0.4
     x_cords = numpy.arange(dimensions) + 1
     for time_step in range(0, time_steps + 1, step_skip):

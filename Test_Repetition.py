@@ -1,3 +1,11 @@
+"""
+A program that solves the master equation many times and compares the exact and approximated solutions with each other.
+
+Authors:    Linus Haid
+
+Version:    June 14th, 2022
+"""
+
 import main
 import numpy
 
